@@ -61,6 +61,8 @@ uploaded_file = st.file_uploader("Choose a file")
 
 prompt = st.text_area("Enter your question:")
 
+
+
 with st.form("Form"):
     api_key = st.text_area("Enter your OpenAI key:")
 
@@ -78,6 +80,15 @@ with st.form("Form"):
                 retriever = create_vector_store(documents, embeddings)
                 answer = answer_question(prompt, retriever)
                 st.write(answer)
+
+                with st.sidebar:
+                    expander = st.expander("History")
+
+                    with expander:
+                        st.write(f"Question:{answer['query']}")
+                        st.write(f"Answer: {answer['result']}")
+
+
             else:
                 st.write("Provide the question")
         else:
