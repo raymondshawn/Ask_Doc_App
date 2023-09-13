@@ -66,8 +66,10 @@ with st.form("Form"):
 
     submitted = st.form_submit_button("Submit")
     if submitted:
-
-        os.environ["OPENAI_API_KEY"] = api_key
+        if api_key:
+            os.environ["OPENAI_API_KEY"] = api_key
+        else:
+            st.write("Provide OpenAI api key")
         if uploaded_file:
             if prompt:
                 text = read_file_as_string(uploaded_file)
@@ -76,3 +78,7 @@ with st.form("Form"):
                 retriever = create_vector_store(documents, embeddings)
                 answer = answer_question(prompt, retriever)
                 st.write(answer)
+            else:
+                st.write("Provide the question")
+        else:
+            st.write("Upload File")
